@@ -1,0 +1,28 @@
+package com.sample;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class DBSample1 {
+	public static void main(String[] args) {
+		String user = "USER217"; // 配布されたユーザを指定する
+		String pwd = "cu53xw"; // 配布されたパスワードを指定する
+		String url = "jdbc:oracle:thin:@school.aimax.com:1521/FREEPDB1";
+		String sql = "SELECT * FROM tbl1";
+
+		try (Connection con = DriverManager.getConnection(url, user, pwd);
+				Statement stmt = con.createStatement()) {
+			ResultSet rs = stmt.executeQuery(sql);
+			while (rs.next()) {
+				System.out.println(rs.getString("col1") + "\t" +
+						rs.getString("col2") + "\t" +
+						rs.getInt("col3"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+}
